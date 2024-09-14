@@ -2,6 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import InputFields from "@/components/InputFields";
 import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
+import { fetchAPI } from "@/lib/fetch";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -54,6 +55,16 @@ export default function SignUp() {
       });
 
       if (completeSignUp.status === "complete") {
+        //Save the user in the Neon database
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
+
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "success" });
       } else {
@@ -174,7 +185,7 @@ export default function SignUp() {
               title="Browse Home"
               onPress={() => {
                 setShowSuccessModal(false);
-                router.push("/(root)/tabs/home");
+                router.push("/(root)/(tabs)/home");
               }}
               className="mt-5"
             />
