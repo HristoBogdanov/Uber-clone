@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
+import { router } from "expo-router";
 
 const recentRides = [
   {
@@ -156,7 +157,14 @@ export default function Page() {
 
   const handleSignOut = () => {};
 
-  const handleDestinationPress = () => {};
+  const handleDestinationPress = (location: {
+    latitude: number;
+    longitude: number;
+    address: string;
+  }) => {
+    setDestinationLocation(location);
+    router.push("/(root)/find-ride");
+  };
 
   return (
     <SafeAreaView className="bg-general-500">
