@@ -10,7 +10,7 @@ export default function Payment() {
     <View>
       <CustomButton
         title="Confirm Ride"
-        className="mt-10"
+        className="mb-20"
         onPress={openPaymentSheet}
       />
     </View>
