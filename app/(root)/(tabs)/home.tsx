@@ -134,6 +134,7 @@ export default function Page() {
   //Requesting permission to use location and set it via the zustand state
   const [hasPermissions, setHasPermission] = useState(false);
 
+  //After permission is granted, get the user location, using the expo-location package and set it to the zustand store
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();

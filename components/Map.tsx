@@ -28,6 +28,7 @@ const Map = () => {
   const { data: drivers, loading, error } = useFetch<Driver[]>("/(api)/driver");
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
+  //creating the car markers after the drivers infromation is fetched from the database
   useEffect(() => {
     if (drivers) {
       if (!userLatitude || !userLongitude) return;
@@ -42,6 +43,7 @@ const Map = () => {
     }
   }, [drivers]);
 
+  //calculating the driver times and setting the drivers to the zustand store
   useEffect(() => {
     if (
       markers.length > 0 &&
@@ -60,6 +62,7 @@ const Map = () => {
     }
   }, [markers, drivers, destinationLatitude, destinationLongitude]);
 
+  //calculating the map region that is shown to the user, based on the user and destination addresses
   const region = calculateRegion({
     userLatitude,
     userLongitude,
@@ -106,6 +109,7 @@ const Map = () => {
         />
       ))}
 
+      {/* Showing the user location marker if we have access to it */}
       {destinationLatitude && destinationLongitude && (
         <>
           <Marker
@@ -117,6 +121,7 @@ const Map = () => {
             title="Destination"
             image={icons.pin}
           />
+          {/* Showing the path from the user location to the destination */}
           <MapViewDirections
             origin={{
               latitude: userLatitude!,

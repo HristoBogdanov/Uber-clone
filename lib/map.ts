@@ -2,6 +2,7 @@ import { Driver, MarkerData } from "@/types/type";
 
 const directionsAPI = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
+//randomly generating the position of each driver, somewhere close to the user
 export const generateMarkersFromData = ({
   data,
   userLatitude,
@@ -24,6 +25,10 @@ export const generateMarkersFromData = ({
   });
 };
 
+//calculating the area, which is shown on the map:
+//if there is no user address and no destination address -> returns a default region (San francisco area)
+//if there is user address, but no destination address -> returns the area of the user
+//if there both user and destination addresses are passed -> returns the calculated area that fits both addresses with some added padding
 export const calculateRegion = ({
   userLatitude,
   userLongitude,
@@ -72,6 +77,7 @@ export const calculateRegion = ({
   };
 };
 
+//using the google directions api to calculate the time from the driver to the user
 export const calculateDriverTimes = async ({
   markers,
   userLatitude,
