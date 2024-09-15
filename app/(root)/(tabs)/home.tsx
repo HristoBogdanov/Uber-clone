@@ -3,7 +3,7 @@ import Map from "@/components/Map";
 import RideCard from "@/components/RideCard";
 import { icons, images } from "@/constants";
 import { useLocationStore } from "@/store";
-import { useUser } from "@clerk/clerk-expo";
+import { SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -129,6 +129,8 @@ export default function Page() {
   const { user } = useUser();
   const loading = false;
 
+  const { signOut } = useAuth();
+
   //Requesting permission to use location and set it via the zustand state
   const [hasPermissions, setHasPermission] = useState(false);
 
@@ -155,7 +157,10 @@ export default function Page() {
     })();
   }, []);
 
-  const handleSignOut = () => {};
+  const handleSignOut = () => {
+    signOut();
+    router.replace("/(auth)/sign-in");
+  };
 
   const handleDestinationPress = (location: {
     latitude: number;
