@@ -109,7 +109,7 @@ const Map = () => {
         />
       ))}
 
-      {/* Showing the user location marker if we have access to it */}
+      {/* Showing the destination location marker if we have access to it */}
       {destinationLatitude && destinationLongitude && (
         <>
           <Marker
